@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codenames Online</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Lobby -->
+    <div id="lobby" class="screen">
+      <h1>Codenames</h1>
+      <p class="subtitle">Play with your coworkers</p>
+
+      <div class="card">
+        <h2>Create or Join a Room</h2>
+        <input id="player-name" type="text" placeholder="Your name" maxlength="20" />
+        <div class="row">
+          <input id="room-code" type="text" placeholder="Room code (e.g. TEAM)" maxlength="8" style="text-transform:uppercase" />
+          <button id="join-btn" class="primary">Join / Create</button>
+        </div>
+        <p class="hint">Share the same room code with your coworkers. Anyone can create it.</p>
+      </div>
+
+      <div class="card small">
+        <h3>How it works</h3>
+        <ol>
+          <li>Everyone joins the same room code</li>
+          <li>Pick a team (Red / Blue) and role (Spymaster / Operative)</li>
+          <li>Spymasters give one-word clues + a number</li>
+          <li>Operatives click words to guess</li>
+          <li>First team to find all their agents wins</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Game -->
+    <div id="game" class="screen hidden">
+      <header>
+        <div class="room-info">
+          <span id="room-display"></span>
+          <button id="copy-link" class="ghost">Copy Link</button>
+        </div>
+        <div class="scores">
+          <div class="score red"><span id="red-score">9</span> Red</div>
+          <div class="score blue"><span id="blue-score">8</span> Blue</div>
+        </div>
+        <div class="turn-info">
+          <span id="turn-text">Waiting for players...</span>
+        </div>
+      </header>
+
+      <div class="main">
+        <aside class="sidebar">
+          <div class="players-section">
+            <h3>Players</h3>
+            <div id="players-list"></div>
+          </div>
+
+          <div class="role-section">
+            <h3>Your Role</h3>
+            <div id="my-role" class="role-box">Not assigned</div>
+            <div class="role-buttons">
+              <button data-team="red" data-role="spymaster" class="role-btn red">Red Spymaster</button>
+              <button data-team="red" data-role="operative" class="role-btn red">Red Operative</button>
+              <button data-team="blue" data-role="spymaster" class="role-btn blue">Blue Spymaster</button>
+              <button data-team="blue" data-role="operative" class="role-btn blue">Blue Operative</button>
+            </div>
+          </div>
+
+          <div id="clue-section" class="clue-section hidden">
+            <h3>Give a Clue</h3>
+            <input id="clue-word" type="text" placeholder="One word" maxlength="20" />
+            <input id="clue-number" type="number" min="0" max="9" value="1" />
+            <button id="give-clue-btn" class="primary">Give Clue</button>
+          </div>
+
+          <div id="current-clue" class="current-clue hidden">
+            <div class="clue-display">
+              <span id="clue-text"></span>
+              <span id="clue-num"></span>
+            </div>
+            <button id="end-turn-btn" class="secondary">End Turn</button>
+          </div>
+
+          <div class="actions">
+            <button id="start-game-btn" class="primary hidden">Start Game</button>
+            <button id="new-game-btn" class="secondary hidden">New Board</button>
+            <button id="leave-btn" class="ghost">Leave Room</button>
+          </div>
+        </aside>
+
+        <div class="board-area">
+          <div id="board" class="board"></div>
+          <div id="message" class="message"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
